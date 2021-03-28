@@ -23,5 +23,11 @@ target_compile_options(AsyncCpp
     PUBLIC -Wshadow
     PUBLIC -Wconversion)
 
+target_include_directories(AsyncCpp
+    PRIVATE inc)
+
+target_precompile_headers(AsyncCpp
+    PRIVATE inc/pch.h)
+
 target_link_libraries(AsyncCpp
     PRIVATE Threads::Threads)
