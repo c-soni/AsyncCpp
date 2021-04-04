@@ -3,8 +3,7 @@
 
 #include <pch.h>
 
-struct Event
-{
+struct Event {
     std::string name;
     std::string data;
 

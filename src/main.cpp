@@ -1,20 +1,23 @@
 #include <pch.h>
-#include <Event.hpp>
-#include <Listener.hpp>
-#include <EventManager.hpp>
 
-int main()
-{
+#include <Event.hpp>
+#include <EventManager.hpp>
+#include <Listener.hpp>
+
+int main() {
     EventManager<2> eventManager;
     const std::string inputData = "external input";
-    eventManager.addEventListener("input", Listener([&](const Event & event) {
-        std::cout << "Name: " << event.name << " Data: " << event.data << " External Input: " << inputData << std::endl;
+    eventManager.addEventListener("input", Listener([&](const Event &event) {
+        std::cout << "Name: " << event.name << " Data: " << event.data
+                  << " External Input: " << inputData << std::endl;
     }));
-    eventManager.addEventListener("keyboard", Listener([](const Event & event) {
-        std::cout << "Name: " << event.name << " Data: " << event.data << " Keyboard Event" << std::endl;
+    eventManager.addEventListener("keyboard", Listener([](const Event &event) {
+        std::cout << "Name: " << event.name << " Data: " << event.data
+                  << " Keyboard Event" << std::endl;
     }));
-    eventManager.addEventListener("mouse", Listener([](const Event & event) {
-        std::cout << "Name: " << event.name << " Data: " << event.data << std::endl;
+    eventManager.addEventListener("mouse", Listener([](const Event &event) {
+        std::cout << "Name: " << event.name << " Data: " << event.data
+                  << std::endl;
     }));
 
     eventManager.dispatchEvent({"mouse", "x: 11, y: 99"});
@@ -28,19 +31,14 @@ int main()
     eventManager.dispatchEvent({"keyboard", "x: 99, y: 11"});
     eventManager.dispatchEvent({"click", "button"});
 
-    eventManager.addEventListener("click", Listener([](const Event & event) {
-        std::cout
-            << "Thread id: "
-            << std::this_thread::get_id()
-            << " Event name: "
-            << event.name
-            << " Event data: "
-            << event.data
-            << "\n";
+    eventManager.addEventListener("click", Listener([](const Event &event) {
+        std::cout << "Thread id: " << std::this_thread::get_id()
+                  << " Event name: " << event.name
+                  << " Event data: " << event.data << "\n";
     }));
 
-    for (std::size_t i = 0; i < 10000; i++)
-    {
-        eventManager.dispatchEvent({"click", "button " + std::to_string(i + 1)});
+    for (std::size_t i = 0; i < 10000; i++) {
+        eventManager.dispatchEvent(
+            {"click", "button " + std::to_string(i + 1)});
     }
 }
