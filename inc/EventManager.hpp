@@ -4,12 +4,11 @@
 #include <pch.h>
 
 #include <Event.hpp>
-#include <Listener.hpp>
 
 template <std::size_t N = 1>
 class EventManager {
     std::queue<Event> eventQueue;
-    std::unordered_map<std::string, std::vector<Listener>> registeredListeners;
+    std::unordered_map<std::string, std::vector<std::function<auto(const Event &)->void>>> registeredListeners;
     std::mutex mutex;
     std::array<std::thread, N> threads;
     bool shutDown = false;
@@ -47,7 +46,7 @@ public:
         }
     }
 
-    auto addEventListener(std::string eventName, const Listener &&listener)
+    auto addEventListener(std::string eventName, const std::function<auto(const Event &)->void> &&listener)
         -> void {
         registeredListeners[eventName].push_back(listener);
     }
