@@ -4,19 +4,18 @@
 #include <EventManager.hpp>
 
 int main() {
-    EventManager<2> eventManager;
+    EventManager<6> eventManager;
     const std::string inputData = "external input";
     eventManager.addEventListener("input", [&](const Event &event) {
         std::cout << "Name: " << event.name << " Data: " << event.data
-                  << " External Input: " << inputData << std::endl;
+                  << " External Input: " << inputData << '\n';
     });
     eventManager.addEventListener("keyboard", [](const Event &event) {
         std::cout << "Name: " << event.name << " Data: " << event.data
-                  << " Keyboard Event" << std::endl;
+                  << " Keyboard Event" << '\n';
     });
     eventManager.addEventListener("mouse", [](const Event &event) {
-        std::cout << "Name: " << event.name << " Data: " << event.data
-                  << std::endl;
+        std::cout << "Name: " << event.name << " Data: " << event.data << '\n';
     });
 
     eventManager.dispatchEvent({"mouse", "x: 11, y: 99"});
@@ -33,10 +32,10 @@ int main() {
     eventManager.addEventListener("click", [](const Event &event) {
         std::cout << "Thread id: " << std::this_thread::get_id()
                   << " Event name: " << event.name
-                  << " Event data: " << event.data << "\n";
+                  << " Event data: " << event.data << '\n';
     });
 
-    for (std::size_t i = 0; i < 10000; i++) {
+    for (std::size_t i = 0; i < 10; i++) {
         eventManager.dispatchEvent(
             {"click", "button " + std::to_string(i + 1)});
     }
